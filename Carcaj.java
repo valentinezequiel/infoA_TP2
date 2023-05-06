@@ -7,7 +7,7 @@ import java.util.List;
  */
 public class Carcaj extends Elemento {
     private final Integer PESO_PROPIO = 10;
-    private Integer capacidad;
+    private Integer capacidad; //en cantidad de flechas no en peso
     private List<Flecha> flechas;
 
     /**
@@ -16,7 +16,13 @@ public class Carcaj extends Elemento {
      * Recordar que es de tipo recipiente y tiene un peso inicial.
      */
     public Carcaj() {
-        // TODO - Implementar metodo
+       
+        setTipo(TipoElemento.RECIPIENTE);//tipo="Recipiente";NO se puede. es atributo privado. ademas es un enum.
+        setPeso(PESO_PROPIO);
+        setNombre("Carcaj chico");
+        capacidad=5;
+        //flechas=null;
+        flechas=new ArrayList<Flecha>();//flechas=null;
     }
 
     /**
@@ -28,7 +34,11 @@ public class Carcaj extends Elemento {
      * @param capacidad Cantidad maxima de flechas.
      */
     public Carcaj(String nombre, Integer capacidad) {
-        // TODO - Implementar metodo
+        setTipo(TipoElemento.RECIPIENTE);
+        setPeso(PESO_PROPIO);
+        setNombre(nombre);
+        this.capacidad=capacidad;
+        flechas=new ArrayList<Flecha>();
     }
 
     /**
@@ -47,10 +57,25 @@ public class Carcaj extends Elemento {
      * @param flecha La flecha a agregar.
      */
     public void addFlecha (Elemento flecha) {
-        // TODO - Implementar metodo
+        
+        if(flechas.size()==capacidad){
+            System.out.println(this.getNombre()+": Capacidad completa");
+        }
+        else if(flecha instanceof Flecha){
+           flechas.add((Flecha)flecha);
+            //se viola el principio tell dont ask
+            //al actualizar el peso total...
+            //mas adelante hay un metodo que hace esto........
+            //this.setPeso(this.getPeso()+flecha.getPeso());
+            this.addPeso(flecha.getPeso());
+        }
+        else{
+            System.out.println(flecha.getNombre()+": No es una flecha");
+        }
     }
 
     /**
+     * CUIDADO!! PELIGRO!!
      * Quita del carcaj una flecha.
      * 
      * Debe actualizarse el peso total.
@@ -62,8 +87,17 @@ public class Carcaj extends Elemento {
      * @return Una flecha.
      */
     public Flecha getFlecha () {
-        // TODO - Implementar metodo
-        return null;
+        if(flechas.isEmpty()){
+            System.out.println(this.getNombre()+": No quedan flechas");
+            return null;
+        }
+
+
+        Flecha flechaEliminada=flechas.remove(0);
+        //this.setPeso(this.getPeso()-flechaEliminada.getPeso());
+        this.addPeso((-1)*flechaEliminada.getPeso());
+        return flechaEliminada;
+        
     }
 
     /**
@@ -73,7 +107,7 @@ public class Carcaj extends Elemento {
      * @param peso El peso a modificar.
      */
     public void addPeso (Integer peso) {
-        // TODO - Implementar metodo
+        this.setPeso(this.getPeso()+peso);
     }
 
     /**
@@ -85,8 +119,7 @@ public class Carcaj extends Elemento {
      */
     @Override        
     public String toString() {
-        // TODO - Implementar metodo
-        return null;
+        return this.getNombre()+": Flechas "+flechas.size()+"/"+capacidad;
     }
 
     public Integer getCantidadFlechas () {
