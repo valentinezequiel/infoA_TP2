@@ -42,9 +42,9 @@ public class Habitacion
      */
     public Habitacion (LugaresMapa lugar) 
     {
-        //this.descripcion = descripcion;
+        this.lugar=lugar;
         salidas = new TreeMap<>();
-        // TODO - Modificar metodo
+        elementos = new TreeMap<>();
     }
 
     /**
@@ -53,8 +53,7 @@ public class Habitacion
      * @return El nombre de la habitacion.
      */
     public String getNombre () {
-        // TODO - Implementar metodo
-        return null;
+        return lugar.getNombre();
     }
 
     /**
@@ -63,8 +62,7 @@ public class Habitacion
      */
     public String getDescripcionCorta()
     {
-        // TODO - Implementar metodo
-        return null;
+        return lugar.getDescripcion();
     }
 
     /**
@@ -81,9 +79,9 @@ public class Habitacion
      */
     public String getDescripcionLarga()
     {
-        // TODO - Modificar metodo
-        //return "Usted esta en  " + descripcion + ".\n" + getStringDeSalidas();
-        return null;
+        
+        return "Usted esta en  " + lugar.getDescripcion() + ".\n" + this.getStringDeSalidas() +".\n" + this.getStringDeElementos();
+        
         
     }
 
@@ -98,10 +96,16 @@ public class Habitacion
      * @param elemento El elemento a agregar.
      */
     public void addElemento (Elemento elemento) {
-        // TODO - Implementar metodo
+        if(elemento.getTipo()==TipoElemento.LIQUIDO){
+            System.out.println(elemento+": se acaba de derramar en el piso");
+        }
+        else{
+            elementos.put(elemento.getNombre() , elemento);
+        }
     }
 
     /**
+     * CUIDADO
      * Quita el elemento de la habitacion.
      * 
      * Si el elemento es de tipo fijo (parte del escenario)
@@ -117,8 +121,20 @@ public class Habitacion
      * @return El elemento a tomar.
      */
     public Elemento getElemento (String nombre) {
-        // TODO - Implementar metodo
-        return null;
+        Elemento el=this.elementos.get(nombre);
+        if(el==null){
+            System.out.println(el+": No existe");
+            return null;
+        }
+        else if(el.getTipo() == TipoElemento.FIJO){
+            System.out.println(el+": No se puede tomar");
+            return null;
+        }
+        else{
+            return elementos.remove(nombre);
+        }
+        
+
     }
 
     /**
@@ -132,8 +148,11 @@ public class Habitacion
      */
     protected String getStringDeElementos ()
     {
-        // TODO - Implementar metodo
-        return null;
+        String cadena = "Elementos:";
+        for(String elemento : elementos.keySet()) {
+            cadena += " " + elemento;
+        }
+        return cadena;
     }
 
     /**
