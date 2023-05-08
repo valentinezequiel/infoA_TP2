@@ -26,7 +26,26 @@ public class Botella extends Elemento {
      * @param liquido El liquido para rellenar la botella
      */
     public void llenarBotella (Elemento liquido) {
-        // TODO - Implementar metodo
+       //liquido.getPeso()>=0 se me ocurre a mi
+        if(liquido.getTipo()==TipoElemento.LIQUIDO){
+            if(this.isVacia()){
+                
+                this.contenido=liquido;
+                this.setPeso(this.getPeso()+liquido.getPeso());
+                generarNombre();
+            }
+            else{
+                //TODO
+                System.out.println(this);
+            }
+
+        }
+        else {
+            //TODO
+            System.out.println(this);
+        }
+
+        
     }
 
     /**
@@ -37,8 +56,11 @@ public class Botella extends Elemento {
      * @return El contenido de la botella.
      */
     public Elemento vaciarBotella () {
-        // TODO - Implementar metodo
-        return null;
+        setPeso(this.getPeso()-contenido.getPeso());
+        Elemento auxContenido=contenido;
+        contenido=null;
+        generarNombre();
+        return auxContenido;
     }
 
     /**
@@ -48,7 +70,13 @@ public class Botella extends Elemento {
      * "Botella vacia"
      */
     public void generarNombre () {
-        // TODO - Implementar metodo
+        
+        if(isVacia()){
+            setNombre("Botella vacia");
+        }
+        else{
+            setNombre("Botella con "+contenido.getNombre());
+        }
     }
 
     /**
@@ -58,8 +86,8 @@ public class Botella extends Elemento {
      * @return true en caso de contener algun tipo de pocima.
      */
     public Boolean hasPocima () {
-        // TODO - Implementar metodo
-        return null;
+       
+        return (!isVacia() && contenido.getNombre().contains("Pocima"));
     }
 
     /**
@@ -69,8 +97,7 @@ public class Botella extends Elemento {
      * @return true en caso de contener agua
      */
     public Boolean hasAgua () {
-        // TODO - Implementar metodo
-        return null;
+        return (!isVacia() && contenido.getNombre().contains("Agua"));
     }
   
     /**
@@ -80,8 +107,7 @@ public class Botella extends Elemento {
      * @return true en caso de contener vino
      */
     public Boolean hasVino () {
-        // TODO - Implementar metodo
-        return null;
+        return (!isVacia() && contenido.getNombre().contains("Vino"));
     }
   
     /**
