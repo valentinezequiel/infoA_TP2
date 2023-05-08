@@ -41,7 +41,7 @@ public class Botella extends Elemento {
 
         }
         else {
-            //TODO
+            
             System.out.println(this+": No admite "+liquido);
         }
 
