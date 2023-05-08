@@ -124,7 +124,7 @@ public class Habitacion
     public Elemento getElemento (String nombre) {
         Elemento el=this.elementos.get(nombre);
         if(el==null){
-            System.out.println(el.getNombre()+": No existe");
+            System.out.println(nombre+": No existe");
             return null;
         }
         else if(el.getTipo() == TipoElemento.FIJO){
