@@ -35,14 +35,14 @@ public class Botella extends Elemento {
                 generarNombre();
             }
             else{
-                //TODO
-                System.out.println(this);
+                //si no esta vacia
+                System.out.println(this+": Se encuentra llena");
             }
 
         }
         else {
             //TODO
-            System.out.println(this);
+            System.out.println(this+": No admite "+liquido);
         }
 
         
