@@ -19,6 +19,7 @@ import java.util.TreeMap;
 public class Habitacion 
 {
     // private String descripcion;
+
     // almacena las salidas de esta habitacion
     protected TreeMap<Salida, Habitacion> salidas;
     // almacena los elementos de la habitacion
@@ -97,7 +98,7 @@ public class Habitacion
      */
     public void addElemento (Elemento elemento) {
         if(elemento.getTipo()==TipoElemento.LIQUIDO){
-            System.out.println(elemento+": se acaba de derramar en el piso");
+            System.out.println(elemento.getNombre()+": se acaba de derramar en el piso");
         }
         else{
             elementos.put(elemento.getNombre() , elemento);
@@ -123,11 +124,11 @@ public class Habitacion
     public Elemento getElemento (String nombre) {
         Elemento el=this.elementos.get(nombre);
         if(el==null){
-            System.out.println(el+": No existe");
+            System.out.println(el.getNombre()+": No existe");
             return null;
         }
         else if(el.getTipo() == TipoElemento.FIJO){
-            System.out.println(el+": No se puede tomar");
+            System.out.println(el.getNombre()+": No se puede tomar");
             return null;
         }
         else{
@@ -168,8 +169,15 @@ public class Habitacion
      */
     public Habitacion getSalida (Salida direccion) 
     {
-        // TODO - Modificar metodo
-        return salidas.get(direccion);
+        Habitacion salida=salidas.get(direccion);
+        if(salida==null){
+          System.out.println("No hay salida en direccion "+direccion);  
+          return this;
+        }
+        else{
+            return salida;
+        }
+        
     }
 
     /**
@@ -200,4 +208,3 @@ public class Habitacion
     }
 
 }
-
