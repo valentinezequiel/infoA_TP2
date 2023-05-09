@@ -28,9 +28,14 @@ public class Personaje {
      * @param peso El peso maximo que puede transportar el personaje.
      */
     public Personaje (String nombre, Integer vida, Integer peso) {
-        // TODO - Implementar metodo
-        MAX_VIDA = -1;
-        PESO_MAXIMO_BOLSA = -1;
+       MAX_VIDA=vida;
+       this.vida=vida;
+       PESO_MAXIMO_BOLSA=peso;
+       this.nombre=nombre;
+       bolsa=null;
+       objeto=null;
+       habitacion=Mapa.getInstance().getInicio();
+
     }
 
     /**
@@ -38,7 +43,7 @@ public class Personaje {
      * donde se encuentra.
      */
     public void mirarAlrededor () {
-        // TODO - Implementar metodo
+        System.out.println(habitacion.getDescripcionLarga());
     }
 
     /**
@@ -49,7 +54,7 @@ public class Personaje {
      * @param direccion Direccion por donde salir de la habitacion
      */
     public void irHacia (Salida direccion) {
-        // TODO - Implementar metodo
+        habitacion=habitacion.getSalida(direccion);
     } 
 
     /**
@@ -62,7 +67,18 @@ public class Personaje {
      * Si no hay bolsa (null), mostrar "No hay bolsa"
      */
     public void guardarElemento() {
-        // TODO - Implementar metodo
+        if(bolsa==null){
+            System.out.println("No hay bolsa");
+        }
+        else if(objeto==null){
+            System.out.println("No hay elemento para agregar a la bolsa");
+        }
+        else{
+            if(bolsa.getPesoLibre()>=objeto.getPeso()){
+                bolsa.addElemento(objeto);
+                objeto=null;
+            }
+        }
     }
 
     /**
@@ -80,7 +96,18 @@ public class Personaje {
      * @param nombre El elemento a tomar de la bolsa.
      */
     public void tomarElemento (String nombre) {
-        // TODO - Implementar metodo
+        if(objeto!=null){
+            System.out.println("Manos ocupadas");
+        }
+        else if(bolsa==null){
+            System.out.println("No hay bolsa");
+        }
+        else{
+            objeto=bolsa.getElemento(nombre);
+            if(objeto==null){
+                System.out.println("No se cuenta con el "+nombre);
+            }
+        }
     }
     
     /**
@@ -94,7 +121,16 @@ public class Personaje {
      * @param nombre Nombre del objeto a recoger de la habitacion.
      */
     public void recogerElemento (String nombre) {
-        // TODO - Implementar metodo
+     //jaja error xq metodo destructivo
+     Elemento elemento=habitacion.getElemento(nombre);
+        if(elemento!=null)
+        {
+            if(objeto!=null){
+                guardarElemento();//y que pasa si no lo puede guardar???                
+            }
+            objeto=elemento;
+
+        }
     }
 
     /**
@@ -105,7 +141,13 @@ public class Personaje {
      *      "No hay objeto para dejar"
      */
     public void dejarElemento () {
-        // TODO - Implementar metodo
+        if(objeto==null){
+            System.out.println("No hay objeto para dejar");
+        }
+        else{
+            habitacion.addElemento(objeto);
+            objeto=null;
+        }
     }
 
 
